@@ -1,0 +1,167 @@
+\chapter{Introduction}
+
+\section{Purpose}
+Cycling enthusiasts and daily commuters often face significant challenges in identifying safe and reliable routes for their journeys, as standard navigation tools frequently lack granular information regarding the physical condition of roads.
+
+Best Bike Paths (BBP) is designed to fill this problem. The Platform aims to assist cyclists in their activities by creating a dynamic, crowdsourced inventory of bike Paths while enabling the community to effectively share data about Path statuses and obstacles. By addressing the mismatch between static map data and the actual road conditions, BBP enhances the routing process, creating an ecoSystem where User participation directly translates into safer and more informed cycling experiences.
+
+\subsection{Goals}
+\begin{glist}
+    \item Cyclists should be assisted in their cycling activities through the analysis of their Trips.
+    \item Cyclists should be able to record their Trips.
+    \item Cyclists should be able to view their Trips' analysis based on performance (\eg, speed, time, total distance) and on Paths (\eg, status, presence of obstacles, weather).
+    \item Cyclists should be able to provide information on Paths statuses manually.
+    \item Cyclists should have their Trips' Paths automatically recorded while cycling.
+    \item Cyclists should be able to access reliable and consolidated information about Paths (\eg, status, score) derived from the aggregation of community data.
+    \item Cyclists should be able to obtain a list of possible Paths from a source point to a destination point, along with their scores and statuses.
+    \item Cyclists should be able to suggest Paths to other Users.
+\end{glist}
+
+\section{Scope}
+
+Best Bike Paths (BBP) is a collaborative Platform designed to enhance the cycling experience by facilitating the collection and retrieval of granular road information. It serves a dual purpose: enabling Registered Users to track their performance and actively contribute to the community, while allowing Guest Users to safely navigate and explore the existing map inventory.
+
+At the core of the System lies the Data Aggregation logic. By collecting heterogeneous User reports on road Segments (\eg, \emph{Optimal}, \emph{Needs Maintenance}), the Platform resolves conflicting information based on data freshness and confirmation counts, ultimately assigning a single, reliable quality score to each route.
+
+To minimize User distraction and ensure data accuracy, the System automates key activities such as obstacle detection via accelerometer and gyroscope analysis, weather data retrieval, and performance statistics calculation. Furthermore, it provides dedicated tools for the manual validation of anomalies and the management of personal Trip history, ensuring a comprehensive and reliable service.
+\subsection{World Phenomena}
+\begin{wplist}
+    \item Users choose their preferred Path suggestion among a list of alternatives.
+    \item Users start a cycling Trip.
+    \item Users end a cycling Trip.
+    \item During a ride, Users encounter obstacles along the way, such as potholes.
+    \item The Users' mobile devices undergo physical vibrations and orientation changes while cycling.
+    \item Paths conditions worsen during time.
+    \item Municipalities or entities improve the physical state of Paths through maintenance or new constructions.
+    \item Information regarding weather conditions is collected and made available by external meteorological services.
+    \item Users decide to plan a Trip between two locations.
+    \item Users decide to have their Trip recorded for analysis.
+\end{wplist}
+
+\subsection{Shared Phenomena}
+
+\subsubsection*{World Controlled}
+\begin{splist}
+    \item Users enter credentials to sign up to BBP.
+    \item Users enter credentials to log in to BBP.
+    \item Users enter the application without providing credentials (Guest access).
+    \item Users manually provide details about Paths.
+    \item Users begin a cycling session on BBP.
+    \item Users end a cycling session on BBP.
+    \item Users confirm the presence of an automatically detected obstacle.
+    \item Users deny the presence of an automatically detected obstacle.
+    \item Users delete a Trip.
+    \item Users make their Trips' Path information public.
+    \item Users insert a source point for Path research.
+    \item Users insert a destination point for Path research.
+    \item The User's mobile device transmits GPS coordinates to the System.
+    \item The User's mobile device transmits accelerometer and gyroscope data to the System.
+    \item The External Meteorological Service transmits weather data to the System.
+\end{splist}
+
+\subsubsection*{Machine Controlled}
+\begin{splist}[resume]
+    \item The System displays automatically detected obstacles to the User for confirmation.
+    \item The System provides the Users with possible Paths from a source to a destination, including their scores.
+    \item The System displays performance statistics (\eg, speed, distance) to the User.
+    \item The System requests weather updates for a specific location to the External Meteorological Service.
+\end{splist}
+
+\section{Definitions, Acronyms, Abbreviations}
+
+\subsection{Definitions}
+\begin{description}[noitemsep]
+    \item [System, Platform] These terms are used interchangeably in this document to refer to the Best Bike Paths (BBP) software and infrastructure.
+    
+    \item [Trip] A continuous cycling activity recorded by a specific User, characterized by a temporal sequence of GPS coordinates and associated sensor data.
+
+    \item [Segment] The atomic unit of a Path (\eg, a stretch of road between two intersections or a trail section). 
+    
+    \item [Path] A logical sequence of geographical Segments connecting a starting point to a destination, which can be traversed by a bicycle. It is the static representation of a route, distinct from the dynamic \emph{Trip} which is the act of traversing it.
+    
+    
+    \item [Obstacle] A physical anomaly detected along a Path that represents a non-optimal condition for riding. Examples include, but are not limited to, potholes, steep slopes, speed bumps, and muddy terrain.
+    
+    \item [Status] A qualitative descriptor assigned to a Path or Segment (\eg, \emph{Optimal}, \emph{Sufficient}, \emph{Requires Maintenance}) derived from User reports and aggregated community data.
+    
+    \item [Score] A calculated numerical value representing the overall quality and efficiency of a Path. It is computed by the System based on the aggregated Status and other factors (\eg, obstacles) to rank search results.
+    
+    \item [Guest] An unregistered User who interacts with the Platform solely for information retrieval (searching Paths) without the ability to contribute data or record Trips.
+\end{description}
+
+\subsection{Acronyms}
+\begin{table}[H]
+    \sf
+    \small
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \rowcolor{lightgray} \textbf{Acronym} & \textbf{Definition}\\
+        \hline
+        \textbf{BBP} & Best Bike Paths \\
+        \textbf{RASD} & Requirements Analysis and Specification Document \\
+        \textbf{API} & Application Programming Interface \\
+        \textbf{GPS} & Global Positioning System \\
+        \textbf{OTP} & One Time Password \\
+        \textbf{HTTPS} & HyperText Transfer Protocol over Secure Socket Layer \\
+        \textbf{JSON} & JavaScript Object Notation \\
+        \textbf{TLS} & Transport Layer Security \\
+        \hline
+    \end{tabularx}
+    \caption{Acronyms used in this document}
+\end{table}
+
+\subsection{Abbreviations}
+\begin{table}[H]
+    \sf
+    \small
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \rowcolor{lightgray} \textbf{Abbreviation} & \textbf{Definition}\\
+        \hline
+        \textbf{G} & Goal \\
+        \textbf{WP} & World Phenomenon \\
+        \textbf{SP} & Shared Phenomenon \\
+        \textbf{DA} & Domain Assumption \\
+        \textbf{R} & Requirement \\
+        \textbf{UC} & Use Case \\
+        \hline
+    \end{tabularx}
+    \caption{Abbreviations used in this document}
+\end{table}
+
+\section{Revision History}
+\begin{table}[H]
+    \sf
+    \small
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|l|X|}
+        \hline
+        \rowcolor{lightgray} \textbf{Revised on} & \textbf{Version} & \textbf{Description}\\
+        \hline
+        23/12/2025 & 1.0 & Initial release of the document \\
+        \hline
+    \end{tabularx}
+    \caption{Revision history of this document}
+\end{table}
+
+\section{Reference Documents}
+The information contained in this document is based on the following sources:
+\begin{enumerate}[noitemsep]
+    \item Di Nitto, Rossi, Camilli, \emph{"A.Y. 2025-2026 Software Engineering 2 Requirement Engineering and Design Project"}, 2025.
+    \item ISO/IEC/IEEE 29148:2018 - ISO/IEC/IEEE International Standard, \emph{"Systems and software engineering - Life cycle processes - Requirements engineering"}, 2018.
+\end{enumerate}
+
+\section{Document Structure}
+\begin{description}
+    \item [1. Introduction] a brief description of the project derived from the analysis of the provided specifications; it highlights the product's goals and scope.
+    \item [2. Overall Description] a more detailed description of the product that includes real-world scenarios and analyses the System from a technical perspective.
+    \item [3. Specific Requirements] a detailed list of all requirements necessary to satisfy the project goals, and their relationship with domain assumptions.
+    \item [4. Formal analysis using Alloy] a formal description of a subset of real-world phenomena, analysed using Alloy to highlight inconsistencies between assumptions and the previously modelled phenomena.
+    \item [5. Effort spent] the time spent by each group member contributing to the creation of this document.
+    \item [6. References] references to documents or tools used in the preparation of this document.
+\end{description}
