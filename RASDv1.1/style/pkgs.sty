@@ -1,0 +1,186 @@
+% DEBUG
+
+% \usepackage{showframe}
+
+
+% BASE
+
+\usepackage[english]{babel}  % Language
+\usepackage[utf8]{inputenc}  % File encoding 
+
+
+% TEXT AND FONTS
+
+% Serif font
+\usepackage{libertinus}  % Traditional but with personality, easy to read, compact
+% \usepackage[libertine]{newtxmath}  % Math support
+% Some alternatives:
+% \usepackage{nimbusserif}  % Similar to Times
+% \usepackage[default,regular,semibold]{sourceserifpro}  % A bit big and less compact, but easy on the eyes
+
+% Monospace font
+\usepackage{plex-mono}  
+
+% Sans-serif font
+\usepackage[defaultsans,scale=0.9]{opensans}
+
+% Encoding
+\usepackage[T1]{fontenc}
+
+% Symbols
+\usepackage{eurosym}  % Euro symbol
+
+% Misc
+\usepackage{moresize}  % More text sizes
+\usepackage[singlespacing]{setspace}  % Control line spacing
+\usepackage{xspace}
+
+
+% MATH
+
+\usepackage{amsmath,amssymb,amsthm,amsfonts, bbm}
+\usepackage{siunitx}  % International System units
+\usepackage{mathtools} 
+
+% CHEMISTRY
+\usepackage[version=4]{mhchem}  % Use \ce for chemical formulas
+\usepackage{chemfig}  % Use \chemfig for molecules
+
+
+% GRAPHICS AND ICONS
+
+\usepackage{xcolor}
+
+\usepackage{graphicx}  % Required for inserting images
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.gif}
+
+\usepackage{fontawesome5}  % FontAwesome icons
+
+\usepackage{dirtree}  % Do directory trees
+\usepackage{pdfpages}  % Insert PDF pages
+
+\usepackage{tikz}
+\usepackage{tikz-timing}
+\usetikzlibrary{shapes, backgrounds}
+\tikzset{x=1cm, y=1cm} % Default tikz units
+
+
+% PAGE GEOMETRY AND STYLE
+
+\usepackage{geometry}  % Modify page geometry
+\usepackage{fancyhdr}  % Fancy page style
+\usepackage{changepage}  % Margin adjustment and detection of odd/even pages
+\usepackage{pdflscape}  % Landscape pages
+
+
+% TITLE FORMATTING
+
+\usepackage[explicit]{titlesec}  % Modify title style and spacing
+
+% URL, REF AND HYPERREF
+
+\usepackage{hyperref}
+\usepackage{xurl}  % eXtended url package
+\usepackage{nameref}  % get section names by label
+\usepackage[italian]{cleveref}  % smart references
+
+
+
+% APPENDIX
+
+\usepackage{appendix}
+
+
+% TABLES
+
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage{booktabs, tabularx}
+\sisetup{output-decimal-marker={,}}
+\newcolumntype{t}{>{\bfseries}l}
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+
+
+% FIGURES
+
+\usepackage{float}
+\usepackage[labelsep=endash, font=small, format=plain, labelfont={bf,up}]{caption}
+\usepackage{subcaption}  % Subfigures
+\usepackage{graphicx, wrapfig}
+\usepackage[rightcaption]{sidecap}
+
+% GRAPHICS
+% Grafici
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+
+
+% LISTINGS
+
+% \usepackage{mdframed}
+\usepackage{listings}
+\usepackage[breakable]{tcolorbox}
+\usepackage[newfloat]{minted}
+
+
+% LISTS
+
+\usepackage{enumitem}
+
+
+% BIBLIOGRAPHY
+
+% Necessary to make the bibliography two-column
+\usepackage{etoolbox}
+%\usepackage{relsize}
+
+\usepackage{csquotes}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{bibliography/references.bib}
+
+% Define Alloy language (custom settings for highlighting)
+\lstdefinelanguage{Alloy}{
+    keywords={abstract, module, open, sig, extends, fact, pred, fun, let, this, some, all, no, one, lone, set, enum, run, check, assert, eventually, always, until, before, after, for, but, once, not, and, or, implies, iff, else, disj, xor, in, &},
+    keywordstyle=\color{blue}\bfseries,
+    sensitive=true,
+    basicstyle=\ttfamily\small,
+    comment=[l]{//},
+    stringstyle=\color{orange}\ttfamily,
+    morestring=[b]",
+    keywordstyle=\bfseries\color{blue},
+    commentstyle=\itshape\color[rgb]{0,0.5,0},
+    stringstyle=\color{orange},  
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=3
+}
+
+
+
+% GLOSSARIES AND ACRONYMS
+
+% One-column glossary
+% \usepackage[nonumberlist, acronym, toc, style=listhypergroup]{glossaries}  
+
+% Two-column glossary
+% \usepackage[toc, style=mcoltreehypergroup, stylemods=mcols]{glossaries-extra}  
+% 
+% \usepackage{glossary/glossary}  % Glossary file
+% \makeglossaries
+
+% Multitoc - for two-column table of contents, list of figures and tables.
+% Outdated and discontinued
+% \usepackage[toc, lof, lot]{multitoc}  
+
+
+%\usepackage[]{tocloft}
+
+
+
+% \setlength{\cftsubsecindent}{0cm}
+% \setlength{\cftsubsubsecindent}{0cm}

@@ -1,0 +1,44 @@
+% Title page
+\input{opening/titlepage.tex}
+
+
+% Table of contents
+\newpage
+\thispagestyle{empty}
+
+%\clearpage
+%\cleardoublepage
+%\phantomsection
+
+\pagestyle{plain}
+
+
+\begingroup
+
+    % Greatly compress space used by TOC, LOF and LOT
+    \renewcommand{\baselinestretch}{1}  % less spacing
+    \small  % smaller font size
+    \setlength{\parskip}{0mm}  % Paragraph skip 0mm
+
+    % List of Contents
+    {
+        \hypersetup{linkcolor=black}
+        \addcontentsline{toc}{chapter}{Table of Contents}
+        \tableofcontents
+        \newpage
+        \addcontentsline{toc}{chapter}{List of Figures}
+        \listoffigures
+        \newpage
+        \addcontentsline{toc}{chapter}{List of Tables}
+        \listoftables
+    }
+    
+    % List of Listings -- uncomment if necessary
+    {
+        % \listoflistings
+        % \addcontentsline{toc}{chapter}{List of listings}
+    
+        % \listof{lstlisting}{Code listings} % old code
+    }
+    
+\endgroup

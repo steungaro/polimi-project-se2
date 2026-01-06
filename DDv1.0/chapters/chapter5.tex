@@ -1,0 +1,121 @@
+\chapter{Implementation, Integration and Test Plan}
+\section{Overview}
+The purpose of this section is to define the systematic strategy for the implementation, integration, and validation. Transitioning from the architectural design to the final software release requires a structured roadmap to effectively manage the complexity of the distributed environment, specifically the interaction between the \emph{Thick Client} mobile application and the backend \emph{Microservices cluster}.
+
+The implementation process is organized into logical phases, or \emph{Waves}, and follows a \textbf{bottom-up approach}. This strategy prioritizes the establishment of the data persistence layer and critical infrastructural services, such as the \emph{API Gateway} and \emph{Authentication Service}. Subsequently, the development focuses on the core business logic, before finalizing with the implementation of the Mobile User Interface and the integration of external services. This dependency-driven roadmap ensures that each phase produces a testable and consistent increment of the system.
+
+Parallel to the implementation, the integration strategy is designed to verify the correct interplay between components. Given the decoupled nature of the architecture, integration activities focus on two critical boundaries: the synchronous RESTful communication between the Mobile App and the API Gateway, and the asynchronous event-driven interactions between internal microservices.
+
+Lastly, the Test Plan adopts a multi-level approach, ranging from unit testing of individual modules to end-to-end system testing, verifying both the functional correctness and the adherence to non-functional constraints such as performance and reliability.
+
+
+\section{Implementation Plan}
+
+\subsection*{Wave 1: Core Infrastructure and Identity}
+The first phase focuses on establishing the communication backbone and the User management capabilities.
+\begin{itemize}
+    \item \textbf{Backend Infrastructure:} Setup of the Kubernetes Cluster, configuration of the API Gateway (Ingress Controller, SSL termination), and the Message Broker (\eg, RabbitMQ/Kafka) for asynchronous events.
+    \item \textbf{Databases:} Provisioning of the persistent storage, specifically the PostgreSQL instances for Users and Security data.
+    \item \textbf{Authentication \& Users Services:} Implementation of the \texttt{Authentication Service} (JWT generation, OTP logic via Email Adapter) and \texttt{Users Service} (Profile management).
+    \item \textbf{Client Skeleton:} Setup of the Mobile App project (Flutter), implementation of the UI navigation shell, and integration of the Local SQLite database structure.
+\end{itemize}
+
+\subsection*{Wave 2: Tracking and Data Collection}
+This phase addresses the core value proposition: recording Trips and saving them.
+\begin{itemize}
+    \item \textbf{Mobile Sensor Logic:} Implementation of the \emph{Sensor Controller} and \emph{Motion Analyser} modules within the mobile app to handle raw GPS and accelerometer streams.
+    \item \textbf{Local Persistence:} Implementation of the logic to store Trips offline in the local SQLite DB.
+    \item \textbf{Trips \& Paths Services:} Development of the backend microservices responsible for data ingestion. This includes defining the internal gRPC contracts for the communication between \emph{Trips Manager} and \emph{Paths Manager}.
+    \item \textbf{Spatial Database:} Setup of the PostGIS extension to handle geometry storage.
+\end{itemize}
+
+\subsection*{Wave 3: Analytics and Routing}
+The final phase implements the complex algorithms that leverage the data collected in Wave 2.
+\begin{itemize}
+    \item \textbf{Aggregation Logic:} Development of the \emph{Aggregation Worker}. This component is implemented to listen to \emph{Path Saved} events and update the global \emph{Reliability Scores}.
+    \item \textbf{Routing Engine:} Implementation of the \emph{Routes Manager}, optimizing the pathfinding algorithm on the Read-Model (Segments DBMS).
+    \item \textbf{External Integration:} Finalizing the adapters for third-party services (Weather and Maps) to enrich the User experience.
+\end{itemize}
+
+\section{Integration Strategy}
+Instead of a generic layer-based integration, a \textbf{Feature-Oriented Integration Strategy} is adopted. Since the System is composed of autonomous microservices and a heavy Client, integration testing is performed by assembling the specific components required to satisfy a complete functional scenario.
+
+\noindent
+Below, the integration flow is detailed for each primary feature of the system.
+
+\subsection*{Feature A: User Onboarding (Sign Up \& Login)}
+This integration step verifies the security chain and the correct propagation of identity.
+\begin{itemize}
+    \item \textbf{Components Involved:} Mobile App, API Gateway, Authentication Service, Users Service, Email Provider.
+    \item \textbf{Integration Logic:} The Mobile App is integrated with the API Gateway to ensure REST requests are correctly routed. The critical internal integration point is between the \emph{Auth Service} and the \emph{Users Service}: when a User validates the OTP, the Auth Service must successfully invoke the internal gRPC endpoint of the Users Service to create the persistent profile. Finally, the ability to send emails is verified by integrating the SMTP Adapter.
+\end{itemize}
+
+\subsection*{Feature B: Offline Trip Recording}
+This step validates the \emph{Thick Client} architecture, focusing purely on local component integration without backend dependency.
+\begin{itemize}
+    \item \textbf{Components Involved:} Sensor Controller, Motion Analyser, Local Persistence Manager (SQLite).
+    \item \textbf{Integration Logic:} The integration focuses on the data pipeline within the device. The \emph{Sensor Controller} is analysed to see if it correctly streams hardware data to the \emph{Motion Analyser}, and the Analyser's output (anomalies/coordinates) is checked to see if it is correctly serialized and written to the \emph{Local Persistence Manager}. This ensures the \emph{Offline-First} requirement is met.
+\end{itemize}
+
+\subsection*{Feature C: Trip Synchronization (Save)}
+This is the most complex integration scenario, bridging the Client and multiple Backend services.
+\begin{itemize}
+    \item \textbf{Components Involved:} Mobile App, Trips Manager, Paths Manager, Trips DBMS, Paths DBMS.
+    \item \textbf{Integration Logic:} The Mobile App integrates with the backend via the \texttt{POST /save} endpoint. On the server side, the transactional integrity is verified: the \emph{Trips Manager} must save the metadata and synchronously call the \emph{Paths Manager} (via gRPC) to save the geometry. The integration is considered successful only if both databases (Trips DBMS and Paths DBMS) end up in a consistent state.
+\end{itemize}
+
+\subsection*{Feature D: Global Map Consistency (Aggregation)}
+This step integrates the asynchronous Event-Driven architecture.
+\begin{itemize}
+    \item \textbf{Components Involved:} Paths Manager, Message Broker, Aggregation Worker, Segments DBMS.
+    \item \textbf{Integration Logic:} The integration point is the Message Broker (Pub/Sub). The purpose is to verify that when the \emph{Paths Manager} commits a new public Path, an event is correctly published. The \emph{Aggregation Worker} must then consume this message, retrieve the geometry, and execute the merging algorithm on the \emph{Segments DBMS}. This validates the eventual consistency of the system.
+\end{itemize}
+
+\subsection*{Feature E: Routing and Exploration}
+This final step integrates the Read-Model components.
+\begin{itemize}
+    \item \textbf{Components Involved:} Mobile App, Routes Manager, Segments DBMS (Read Access).
+    \item \textbf{Integration Logic:} The Mobile App requests a route calculation. The integration verifies that the \emph{Routes Manager} can efficiently query the \emph{Segments DBMS} (populated by Feature D) using spatial indices and return a valid GeoJSON response to the client within the defined latency constraints.
+\end{itemize}
+
+\section{Test Plan}
+To ensure the reliability, performance, and usability of the \emph{Best Bike Paths} System, testing is performed at multiple levels of granularity. The strategy follows the \emph{Test Pyramid} principle, starting from isolated components and moving up to complete end-to-end scenarios and user acceptance.
+
+\subsection*{Unit Testing}
+The first line of defence focuses on verifying the internal logic of individual components in isolation.
+\begin{itemize}
+    \item \textbf{Backend Microservices:} Each service (Authentication, Trips, Routes) is tested using frameworks like \emph{JUnit} or \emph{PyTest}. 
+    \item \textbf{Mobile App Logic:} The Client-side logic is tested using \emph{Flutter Test}. Critical tests include:
+    \begin{itemize}
+        \item \textbf{Motion Analyser:} Feeding pre-recorded raw sensor datasets (accelerometer/GPS) to the analyser to verify it correctly detects potholes and stops recording when the User is stationary.
+        \item \textbf{Local Persistence:} Verifying that Trips are correctly saved to SQLite and that the sync queue is managed properly.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Integration Testing}
+This phase verifies that different components interact correctly. Given the Microservices architecture, this is the most critical technical testing phase.
+\begin{itemize}
+    \item \textbf{Inter-Service Communication:} The purpose is to verify that internal gRPC calls  handle payloads and errors correctly (including timeouts and circuit breaker activation).
+    \item \textbf{Database Integration:} The purpose is to verify that the \emph{Spatial DBMS} (PostGIS) correctly handles geometric queries and that transactions are atomic.
+\end{itemize}
+
+\subsection*{System Testing (End-to-End)}
+These tests validate the complete flow of Use Cases, treating the system as a black box. Automated scripts (using tools like \emph{Selenium} or \emph{Appium}) simulate user behaviour.
+
+\subsection*{Performance and Stress Testing}
+These tests are aimed at verifying that the Non-Functional Requirements are satisfied.
+\begin{itemize}
+    \item \textbf{Load Testing:} 10,000 concurrent virtual Users hitting the API Gateway are simulated to verify that the Kubernetes \emph{Horizontal Pod Autoscaler} triggers correctly, spawning new replicas of the target service.
+    \item \textbf{Chaos Engineering:} Intentionally kill random pods in the staging environment to ensure the \emph{Circuit Breaker} opens and the mobile app degrades gracefully instead of crashing.
+\end{itemize}
+
+\subsection*{User Acceptance Testing (UAT)}
+The final phase involves real human interaction to validate usability and real-world performance.
+\begin{itemize}
+    \item \textbf{Alpha Testing (Internal):} The development team and internal stakeholders install the app on real devices to catch obvious bugs and UI glitches.
+    \item \textbf{Beta Testing (Closed Public):} A limited group of external users (\eg, 50 cyclists) is invited via \emph{TestFlight} (iOS) or \emph{Google Play Console} (Android). This phase is crucial to:
+    \begin{itemize}
+        \item Collect real sensor data from diverse hardware to tune the \emph{Motion Analyzer} sensitivity.
+        \item Identify edge cases in GPS accuracy (\eg, tunnels, high-rise urban canyons).
+    \end{itemize}
+\end{itemize}

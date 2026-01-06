@@ -1,0 +1,65 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBLE
+
+\documentclass[twoside, openany, 10pt]{report}
+
+
+% ------------------------------------------------------------------------------
+% Variables
+
+% Title for the title page 
+\newcommand{\thesisTitle}{Requirements Analysis and Specification Document}
+% Title for the pages' heading 
+\newcommand{\thesisTitleShort}{RASD}
+
+\newcommand{\thesisSubtitle}{Best Bike Paths}
+
+\newcommand{\thesisType}{Project report}  % Bachelor's Thesis, Master's Thesis, PhD Thesis...
+\newcommand{\thesisDegree}{Master's Degree}  % Bachelor's Degree, Master's Degree, PhD...
+\newcommand{\thesisArea}{Computer Science and Engineering}  % Area of knowledge
+
+\newcommand{\thesisAuthor}{Daniele Toniolo - Stefano Ungaro - Matteo Zappa}
+
+\newcommand{\thesisDate}{{\thesisMonth} {\thesisYear}}
+\newcommand{\thesisAcademicCourse}{2025/2026}  % During which academic year(s) was the thesis developed
+
+\newcommand{\thesisSchool}{Politecnico di Milano}
+\newcommand{\thesisAddress}{Piazza Leonardo da Vinci, 32, 20133 Milano (MI), Italia}
+\newcommand{\thesisDepartment}{Scuola di Ingegneria Industriale e dell'Informazione}
+
+\newcommand{\thesisKeywords}{Keyword 1, Keyword 2, Keyword 3, Keyword 4, Keyword 4, Keyword 5, Keyword 6, Keyword 7, Keyword 8, Keyword 9, Keyword 10, Keyword N}  
+% For the abstract and indexing
+
+
+% ------------------------------------------------------------------------------
+% Import document style
+\usepackage{style/alcazar}
+
+\begin{document}
+% Titlepage, abstract and tables of contents
+\include{opening/opening.tex}
+
+% Chapters
+% Start standard numbering and page style
+
+%\clearpage
+%\cleardoublepage
+%\phantomsection
+
+\pagestyle{chapters}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapters/chapter1.tex}
+
+\input{chapters/chapter2.tex}
+
+\input{chapters/chapter3.tex}
+
+\input{chapters/chapter4.tex}
+
+\input{chapters/chapter5.tex}
+
+\input{chapters/chapter6.tex}
+
+\end{document}

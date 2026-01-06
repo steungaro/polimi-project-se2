@@ -1,0 +1,172 @@
+\chapter{Requirements Traceability}
+\section{Functional Requirements Traceability}
+The following table maps the Functional Requirements (defined in the RASD) to the Design Components (defined in the DD) that are responsible, fully or partially, for their satisfaction.
+{
+\sf
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{xltabular}{\textwidth}{|p{0.25\textwidth}|X|}
+    \hline
+    \rowcolor{lightgray} \textbf{Component} & \textbf{Satisfied Requirements} \\
+    \hline
+    \endhead
+    
+    \textbf{Sensor Controller} & 
+    \textbf{[R6]} Whenever a Trip is being recorded, the System shall keep track of the Path followed by the User acquiring GPS coordinates. \newline
+    \textbf{[R7]} Whenever a Trip is being recorded, the System shall analyse data from the device's accelerometer and gyroscope to automatically detect potential obstacles (\eg, potholes). \\
+    \hline
+    
+    \textbf{Motion analyser} & 
+    \textbf{[R7]} Whenever a Trip is being recorded, the System shall analyse data from the device's accelerometer and gyroscope to automatically detect potential obstacles (\eg, potholes). \newline
+    \textbf{[R9]} Whenever a Trip is being recorded, the System shall automatically pause the data acquisition if the detected speed or movement pattern suggests the User is not cycling (\eg, walking or stationary). \\
+    \hline
+    
+    \textbf{Trip Recording Manager} & 
+    \textbf{[R4]} Upon request, the System shall allow a registered User to start a training session. \newline
+    \textbf{[R5]} Upon request, the System shall allow a registered User to end a training session, as long as they have already started it. \newline
+    \textbf{[R6]} Whenever a Trip is being recorded, the System shall keep track of the Path followed by the User acquiring GPS coordinates. \newline
+    \textbf{[R8]} Whenever the System detects a potential obstacle during a recording, it shall temporarily store its location and type for validation at the end of the session. \newline
+    \textbf{[R9]} Whenever a Trip is being recorded, the System shall automatically pause the data acquisition if the detected speed or movement pattern suggests the User is not cycling (\eg, walking or stationary). \newline
+    \textbf{[R23]} Whenever a Trip is recorded, the System shall elaborate statistics on performance, such as estimated speed, total length, and time. \newline
+    \textbf{[R24]} Whenever a Trip is concluded and external weather services are available, the System shall retrieve and store the weather conditions associated with the Trip's location and time. \\
+    \hline
+
+    \textbf{Aggregation Worker} & 
+    \textbf{[R19]} Whenever a Path is made public, the System shall recalculate the status of the involved street Segments by aggregating the User's data with existing community data. \newline
+    \textbf{[R20]} When aggregating conflicting data about a Path Segment, the System shall prioritize information based on its freshness (recency of submission). \newline
+    \textbf{[R21]} When aggregating conflicting data about a Path Segment, the System shall resolve inconsistencies by considering the number of confirming reports from different Users. \newline
+    \textbf{[R22]} Whenever a public Path is made private or deleted, the System shall remove the specific User's contribution from the aggregated community data, triggering a recalculation of the Segment's status. \\
+    \hline
+
+    \textbf{Trips Manager} & 
+    \textbf{[R14]} Upon request, the System shall allow a registered User to delete their recorded Trips. \newline
+    \textbf{[R18]} Upon request, the System shall allow a registered User to view all their Trips and Paths, whether they are private or public. \\
+    \hline
+
+    \textbf{Paths Manager} & 
+    \textbf{[R12]} The System shall prevent any modification to the Path's structural data (GPS track) and descriptive details (status, obstacles) once the Path has been saved to the System. \newline
+    \textbf{[R13]} Upon request, the System shall allow a registered User to insert a Path manually, as long as a list of streets and statuses is provided. \newline
+    \textbf{[R15]} Upon request, the System shall allow a registered User to delete their Paths, whether inserted manually or automatically. \newline
+    \textbf{[R16]} Upon request, the System shall allow a registered User to make their Path available to the community (public), as long as said Path is currently private. \newline
+    \textbf{[R17]} Upon request, the System shall allow a registered User to make their Path private, as long as said Path has already been shared with the community. \newline
+    \textbf{[R18]} Upon request, the System shall allow a registered User to view all their Trips and Paths, whether they are private or public. \\
+    \hline
+    
+    \textbf{App Logic} & 
+    \textbf{[R1]} Upon request, the System shall allow a User to sign up to the Platform, as long as they provide all the required information and a profile is not already associated with it. \newline
+    \textbf{[R2]} Upon request, the System shall allow a User to log in to the Platform, as long as the correct credentials are provided. \newline
+    \textbf{[R3]} Upon request, the System shall allow a User to access the Platform as a guest. \newline
+    \textbf{[R10]} Upon concluding a recorded Trip (and before final storage), the System shall require the User to validate (confirm or delete) the automatically detected obstacles and assign a general status to the traversed Segments. \newline
+    \textbf{[R11]} Upon concluding a recorded Trip (and before final storage), the System shall allow the User to manually insert and classify obstacles that were not automatically detected by the sensors. \newline
+    \textbf{[R13]} Upon request, the System shall allow a registered User to insert a Path manually, as long as a list of streets and statuses is provided. \newline
+    \textbf{[R14]} Upon request, the System shall allow a registered User to delete their recorded Trips. \newline
+    \textbf{[R15]} Upon request, the System shall allow a registered User to delete their Paths, whether inserted manually or automatically. \newline
+    \textbf{[R16]} Upon request, the System shall allow a registered User to make their Path available to the community (public), as long as said Path is currently private. \newline 
+    \textbf{[R17]} Upon request, the System shall allow a registered User to make their Path private, as long as said Path has already been shared with the community. 
+    \textbf{[R18]} Upon request, the System shall allow a registered User to view all their Trips and Paths, whether they are private or public. \newline
+    \textbf{[R25]} Upon request, the System shall provide a list of Paths connecting two locations to any User (registered or guest), visualizing them on a map ordered by their calculated score. \\
+    \hline
+    
+    \textbf{Authentication Manager} & 
+    \textbf{[R1]} Upon request, the System shall allow a User to sign up to the Platform, as long as they provide all the required information and a profile is not already associated with it. \newline
+    \textbf{[R2]} Upon request, the System shall allow a User to log in to the Platform, as long as the correct credentials are provided. \newline
+    \textbf{[R3]} Upon request, the System shall allow a User to access the Platform as a guest. \\
+    \hline
+
+    \textbf{Routes Manager} & 
+    \textbf{[R25]} Upon request, the System shall provide a list of Paths connecting two locations to any User (registered or guest), visualizing them on a map ordered by their calculated score. \newline
+    \textbf{[R26]} Whenever providing search results, the System shall calculate a Path's score based on its aggregated status (\eg, optimal vs. bad) and its effectiveness in reaching the destination. \\
+    \hline
+    
+    \textbf{Users Manager} & 
+    \textbf{[R1]} Upon request, the System shall allow a User to sign up to the Platform, as long as they provide all the required information and a profile is not already associated with it. \newline
+    \textbf{[R18]} Upon request, the System shall allow a registered User to view all their Trips and Paths, whether they are private or public. \\
+    \hline
+
+    \caption{Functional Requirements Traceability}
+\end{xltabular}
+}
+
+\section{Non-Functional Requirements Traceability}
+The following tables map the Non-Functional Requirements (Performance and System Attributes) defined in the RASD to the architectural decisions and components detailed in \hyperref[ch:architectural_design]{Chapter 2} of this document.
+
+\subsection{Performance Requirements}
+The performance requirements outlined in Section 3.3  of the RASD are addressed through some design decisions (already discussed in \hyperref[sec:architectural_styles]{Section 2.6}). Below a table of the main requirements and how they are achieved.
+\begin{table}[H]
+\sf
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{xltabular}{\textwidth}{|p{0.25\textwidth}|X|}
+    \hline
+    \rowcolor{lightgray} \textbf{RASD Requirement} & \textbf{Design Justification} \\
+    \hline
+    \endhead
+    
+    \textbf{Response Time for Interactive Tasks} \newline
+    (Standard interactions $< 1$ sec) & 
+    The architecture minimizes latency for standard operations through the \textbf{Database-per-Service} pattern. By strictly isolating the User and Authentication databases from the heavy geospatial datasets, the System ensures that simple queries (like login or profile retrieval) never contend for resources with complex analytical tasks. Additionally, the API Gateway provides a unified and optimized entry point. \\
+    \hline
+    
+    \textbf{Path Search Latency} \newline
+    (Routing suggestions $< 5$ sec for 95\% of requests) & 
+    To handle the computational complexity of routing, the System implements the \textbf{CQRS Pattern}. The \emph{Routes Manager} accesses a dedicated Read Model hosted on a Spatial DBMS optimized with R-Tree indices. This decoupling ensures that heavy write operations from incoming Trips do not lock the database tables needed for pathfinding, allowing for sub-second geometric queries. \\
+    \hline
+    
+    \textbf{Sensor Processing Latency} \newline
+    (Client-side processing $< 200$ ms) & 
+    The \textbf{Thick Client} architecture moves the processing logic to the \emph{Edge}. The \emph{Motion Analyser} component runs directly on the User's device, processing accelerometer data in real-time without any network overhead. This ensures that obstacle detection happens instantaneously, independent of server load or connectivity status. \\
+    \hline
+    
+    \textbf{Data Aggregation Freshness} \newline
+    (Global update $< 10$ min) & 
+    The System adopts an \textbf{Event-Driven} approach for data consistency. The \emph{Aggregation Worker} processes updates asynchronously via a message queue. Combined with \textbf{Horizontal Auto-scaling}, the infrastructure can automatically spawn additional worker instances to process bursts of reports in parallel, ensuring the global map is updated well within the 10-minute constraint. \\
+    \hline
+    
+    \textbf{System Capacity} \newline
+    (Support 10,000 concurrent Users) & 
+    Scalability is achieved through the use of \textbf{Stateless Microservices}. Since User sessions are encapsulated in self-contained JWTs rather than stored in server memory, the Kubernetes orchestrator can distribute traffic across any number of replicas. The API Gateway acts as a Load Balancer to ensure no single instance becomes a bottleneck. \\
+    \hline
+    
+    \textbf{Synchronization Latency} \newline
+    (1-hour Trip upload $< 30$ sec) & 
+    The \textbf{Local Persistence Manager} pre-aggregates and structures the data on the device before transmission, reducing the granularity of the payload. Furthermore, the use of efficient serialization formats (JSON over gRPC internally) ensures that the bulk upload of the Trip log is optimized for throughput. \\
+    \hline
+\end{xltabular}
+\caption{Performance Requirements}
+\end{table}
+
+\subsection{Software System Attributes}
+This table maps the quality attributes, described in Section 3.5 of the RASD, to the structural patterns and security measures adopted.
+
+\begin{table}[H]
+\sf
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{xltabular}{\textwidth}{|p{0.25\textwidth}|X|}
+    \hline
+    \rowcolor{lightgray} \textbf{RASD Attribute} & \textbf{Design Justification} \\
+    \hline
+    \endhead
+    
+    \textbf{Reliability} & 
+    Reliability is addressed with a dual strategy. For the critical phase of \textbf{Trip Recording}, data integrity is guaranteed by local buffering (\emph{Local Persistence Manager}), preventing data loss even if the network fails during the activity. For all other interactive features (which assume connectivity), reliability is ensured by the \textbf{Redundancy} of backend services (Kubernetes replicas) and the use of \textbf{Circuit Breakers} to handle transient failures of external providers gracefully. \\
+    \hline
+    
+    \textbf{Availability} & 
+    High availability is achieved through the \textbf{Redundancy} provided by the Kubernetes orchestration layer. Critical microservices (Authentication, Trips, Users) are deployed with multiple replicas behind the API Gateway's Load Balancer. If a specific instance fails, traffic is seamlessly rerouted to a healthy one. Furthermore, \textbf{Horizontal Auto-scaling} ensures the System remains responsive even during unexpected traffic spikes. \\
+    \hline
+    
+    \textbf{Security} & 
+    Security is enforced at multiple layers. The \textbf{API Gateway} acts as a centralized enforcement point for SSL/TLS termination, protecting data in transit. Access control relies on \textbf{Stateless Authentication} via signed JWTs, ensuring that no User credentials are exchanged after the initial login. Additionally, sensitive data stored in the databases is protected using industry-standard AES-256 encryption. \\
+    \hline
+    
+    \textbf{Maintainability} & 
+    The adoption of a \textbf{Microservices Architecture} combined with the \textbf{Database-per-Service} pattern ensures high cohesion and loose coupling. This allows development teams to update, refactor, or scale individual functional domains (\eg, changing the Routing algorithm) without impacting other parts of the System. The use of the \textbf{Adapter Pattern} for external services further simplifies maintenance by isolating vendor-specific logic. \\
+    \hline
+    
+    \textbf{Portability} & 
+    The System maximizes portability on both tiers. On the Client Side, the application is developed using a \textbf{Cross-Platform Framework} (\eg, Flutter). This allows a single codebase to be compiled into native artifacts for both iOS and Android, ensuring consistent behaviour across different ecosystems. On the Server Side, \textbf{Containerization (Docker)} ensures the backend logic runs identically on any infrastructure (Cloud or On-Premise) supporting a container runtime. \\
+    \hline
+\end{xltabular}
+\caption{Software System Attributes}
+\end{table}

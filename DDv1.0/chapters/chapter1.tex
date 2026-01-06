@@ -1,0 +1,130 @@
+\chapter{Introduction}
+\section{Scope}
+
+Best Bike Paths (BBP) is a collaborative Platform designed to enhance the cycling experience by facilitating the collection and retrieval of granular road information. It serves a dual purpose: enabling Registered Users to track their performance and actively contribute to the community, while allowing Guest Users to safely navigate and explore the existing map inventory.
+
+To ensure data reliability and safety, the system employs advanced data aggregation logic that resolves conflicting user reports based on freshness and confirmation counts, assigning a definitive quality score to each route. Additionally, BBP minimizes user distraction by automating obstacle detection via sensors, retrieving weather data, and calculating performance statistics, while still offering tools for manual validation and Trip history management.
+
+\section{Definitions, Acronyms, Abbreviations}
+\subsection{Definitions}
+\begin{description}    
+    \item[API Gateway] A server that acts as a single entry point for the System, routing requests to the appropriate internal microservices and handling cross-cutting concerns like SSL termination and authentication.
+    
+    \item[Guest User] An unauthenticated User with read-only access to the system features, identified by a temporary session token rather than a permanent credential profile.
+    
+    \item[Registered User] A user who has completed the sign-up process, possessing a persistent profile and write-access to contribute data to the community.
+    
+    \item[Microservice] An architectural style that structures the application as a collection of loosely coupled, independently deployable services organized around business capabilities.
+
+    \item[Worker] A specialized background component responsible for the asynchronous processing of  data. It's structure is similar to the one of a Service but it is not called by any other service in synchronous ways.
+
+    \item[Segment] The atomic unit of the map graph. Scores and anomalies are mapped onto these specific segments rather than arbitrary coordinates.
+    
+    \item[Path] The spatial representation of a route (geometry), consisting of a sequence of Segments. In this design, a Path can exist independently of a Trip (\ie, manually created).
+    
+    \item[Trip] The temporal recording of a User's activity. It includes metadata such as start time, end time, duration, and weather conditions, and is linked to a specific Path.
+    
+    \item[Score] A dynamic quality metric assigned to road segments. It is calculated by the Aggregation Worker based on the freshness of data and the number of confirmations received from Users.
+    
+    \item[Thick Client] An architectural pattern where the mobile application performs significant data processing (\eg, sensor analysis) and validation locally, ensuring offline capabilities and reducing server load.
+\end{description}
+\subsection{Acronyms}
+\begin{table}[H]
+    \sf
+    \small
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \rowcolor{lightgray} \textbf{Acronym} & \textbf{Definition}\\
+        \hline
+        \textbf{BBP} & Best Bike Paths \\
+        \textbf{DD} & Design Document \\
+        \textbf{RASD} & Requirements Analysis and Specification Document \\
+        \textbf{REST} & REpresentational State Transfer \\
+        \textbf{API} & Application Programming Interface \\
+        \textbf{GPS} & Global Positioning System \\
+        \textbf{TLS} & Transport Layer Security \\
+        \textbf{SSL} & Secure Sockets Layer \\
+        \textbf{HTTPS} & HyperText Transfer Protocol over Secure Sockets Layer \\
+        \textbf{HTTP} & HyperText Transfer Protocol \\
+        \textbf{gRPC} & gRPC Remote Procedure Calls \\
+        \textbf{JSON} & JavaScript Object Notation \\
+        \textbf{OTP} & One Time Password \\
+        \textbf{JWT} & JSON Web Token \\
+        \textbf{SMTP} & Simple Mail Transfer Protocol \\
+        \textbf{URL} & Uniform Resource Location \\
+        \textbf{URI} & Uniform Resource Identifier \\
+        \textbf{UI} & User Interface \\
+        \textbf{QoS} & Quality of Service \\
+        \textbf{DDD} & Domain-Driven Development \\
+        \textbf{BFF} & Backend-for-Frontend \\
+        \textbf{MitM} & Man-in-the-Middle \\
+        \textbf{CQRS} & Command Query Responsibility Segregation \\
+        \textbf{DBMS} & Database Management System \\
+        \textbf{SQL} & Structured Query Language \\
+        \hline
+    \end{tabularx}
+    \caption{Acronyms used in this document}
+\end{table}
+
+\subsection{Abbreviations}
+\begin{table}[H]
+    \sf
+    \small
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline
+        \rowcolor{lightgray} \textbf{Abbreviation} & \textbf{Definition}\\
+        \hline
+        \textbf{UC} & Use Case \\
+        \textbf{SD} & Sequence Diagram \\
+        \hline
+    \end{tabularx}
+    \caption{Abbreviations used in this document}
+\end{table}
+
+\section{Revision History}
+\begin{table}[H]
+    \sf
+    \small
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{|l|l|X|}
+        \hline
+        \rowcolor{lightgray} \textbf{Revised on} & \textbf{Version} & \textbf{Description}\\
+        \hline
+        07/01/2026 & 1.0 & Initial release of the document \\
+        \hline
+    \end{tabularx}
+    \caption{Revision history of this document}
+\end{table}
+
+\section{Reference Documents}
+The information contained in this document is based on the following sources:
+\begin{enumerate}[label={[\arabic*]}, leftmargin=*]
+
+    \item E. Di Nitto, M. Rossi, and M. Camilli, \emph{Software Engineering 2 -- Requirement Engineering and Design Project}, Politecnico di Milano, A.Y. 2025-2026.
+
+    \item ISO/IEC/IEEE, \emph{Systems and software engineering -- Life cycle processes -- Requirements engineering}, International Standard ISO/IEC/IEEE 29148:2018.
+
+    \item OpenStreetMap Foundation, \emph{API v0.6 Documentation}\footnote{\url{https://wiki.openstreetmap.org/wiki/API_v0.6}}.
+
+    \item OpenWeather Ltd, \emph{One Call API 3.0 Documentation}\footnote{\url{https://openweathermap.org/api/one-call-3}}.
+
+    \item The Kubernetes Authors, \emph{Kubernetes Documentation (v1.35)}\footnote{\url{https://kubernetes.io/docs/home/}}.
+
+    \item Google LLC, \emph{Flutter Documentation}\footnote{\url{https://docs.flutter.dev/}}.
+
+\end{enumerate}
+\section{Document Structure}
+\begin{description}
+    \item [1. Introduction] outlines the purpose and scope of the design document, providing necessary definitions and acronyms.
+    \item [2. Architectural Design] details the system's high-level components, their interactions, the deployment strategy, and the runtime behaviour.
+    \item [3. User Interface Design] presents the visual aspect of the system through mock-ups and flow diagrams, defining the user experience.
+    \item [4. Requirements Traceability] maps the requirements identified in the RASD to the specific design modules, ensuring full coverage.
+    \item [5. Implementation, Integration and Test Plan] defines the testing strategy and the chronological order in which components will be developed and integrated.
+    \item [6. Effort spent] the time spent by each group member contributing to the creation of this document.
+    \item [7. References] references to documents or tools used in the preparation of this document.
+\end{description}
